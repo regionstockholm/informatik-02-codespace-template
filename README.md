@@ -7,12 +7,18 @@ This repository that acts as a template repository is maintained by the workspac
 
 ### Create your own repository (first time)
 
-1. Sign in to GitHub and open this repository.
-2. Select **Use this template** and then **Create a new repository**. 
-3. Choose an owner (either your private github account or your employee's, e.g. regionstockholm) and a choose a repository name. 
-4. In the new repository, select **Code > Codespaces > Create codespace on main**.
+1. Sign in to GitHub and open this repository (if not already done).
 
-GitHub tehn builds the development container from `.devcontainer/devcontainer.json`. The first build can take several minutes. When it is ready, VS Code will open in tha web browser - inside it open a "terminal" and check that at least these tools are available by typing each line folowed by enter:
+2. Select **Use this template** and then **Create a new repository**.
+<img width="1172" height="277" alt="image" src="https://github.com/user-attachments/assets/09acb820-e586-4a77-9540-42c3b00864ab" />
+   
+4. Choose an owner (either your private github account for experiemnts - or your employee's, e.g. regionstockholm for shared work) and a choose a repository name. 
+
+<img width="785" height="718" alt="image" src="https://github.com/user-attachments/assets/635f73f5-491c-4837-8219-af0f1f3137f0" />
+
+5. In the new repository, select **Code > Codespaces > Create codespace on main**.
+
+GitHub then builds the development container from `.devcontainer/devcontainer.json`. The first build can take several minutes. When it is ready, VS Code will open in tha web browser - inside it open a "terminal" and check that at least these tools are available by typing each line folowed by enter:
 
 ```bash
 sct --help
