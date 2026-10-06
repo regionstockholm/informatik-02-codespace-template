@@ -1,4 +1,4 @@
-# informatik-01-codespace
+# informatik-02-codespace
 Basic workspace/codespace setup, variant #01, for informaticians to use for running e.g. terminology server and openEHR-assistant tools
 
 ## Create your own Codespace
