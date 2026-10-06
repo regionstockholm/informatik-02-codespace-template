@@ -1,0 +1,17 @@
+{
+  "servers": {
+    "openehr-assistant-mcp": {
+      "type": "http",
+      "url": "https://openehr-assistant-mcp.apps.cadasto.com/"
+    },
+    "sct-snomed": {
+      "type": "stdio",
+      "command": "sct",
+      "args": [
+        "mcp",
+        "--db",
+        "/shared-not-stored-in-git/sct-data/data/swedish-snomed.db"
+      ]
+    }
+  }
+}

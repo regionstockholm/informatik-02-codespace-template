@@ -1,0 +1,64 @@
+{
+  "name": "Deno + Rust + JVM + Python",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "remoteUser": "vscode",
+  "init": true,
+  "forwardPorts": [8080],
+  "remoteEnv": {
+    "PATH": "/home/vscode/.deno/bin:${containerEnv:PATH}",
+    "SNOMED_CT_DISTRIBUTION_DIRECTORY": "/shared-not-stored-in-git/snomed-ct-files",
+    "SCT_DATA_HOME": "/shared-not-stored-in-git/sct-data",
+    "PERSONAL_DATA": "/personal-not-stored-in-git"
+  },
+  "mounts": [
+    {
+      "source": "${devcontainerId}-deno-cache",
+      "target": "/home/vscode/.cache/deno",
+      "type": "volume"
+    },
+    {
+      "source": "${devcontainerId}-bash-history",
+      "target": "/home/vscode/.local/state/bash",
+      "type": "volume"
+    },
+   {
+    "source": "shared-not-stored-in-git",
+    "target": "/shared-not-stored-in-git",
+    "type": "volume"
+  },
+  {
+    "source": "${devcontainerId}-personal-not-stored-in-git",
+    "target": "/personal-not-stored-in-git",
+    "type": "volume"
+  }
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "denoland.vscode-deno",
+        "rust-lang.rust-analyzer",
+        "vadimcn.vscode-lldb",
+        "redhat.java",
+        "vscjava.vscode-maven",
+        "betterthantomorrow.calva",
+        "ms-python.python",
+        "ms-python.vscode-pylance"
+      ],
+      "settings": {
+        "deno.enable": true
+      }
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11"
+    },
+    "ghcr.io/devcontainers/features/rust:1": {},
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "21"
+    }
+  },
+  "postCreateCommand": "curl -fsSL https://deno.land/install.sh | sh && echo 'export PATH=\"$HOME/.deno/bin:$PATH\"' >> /home/vscode/.bashrc"
+}

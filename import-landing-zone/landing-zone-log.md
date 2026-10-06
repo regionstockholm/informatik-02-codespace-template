@@ -1,0 +1,1 @@
+# SNOMED CT landing-zone import log
