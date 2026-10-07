@@ -50,23 +50,11 @@ A version number should be returned. The `sct` command checks if the SNOMED CT t
 
 ### First-time SNOMED CT setup
 
-The codespace container installs the SCT command automatically, but it does not automatically download SNOMED CT releases or build a database. You have to get hold of suitable SNOMED CT distribution ZIP files that are licensed to your organisation from your national release centre. Example: If you are a logged-in employee of Region Stockholm (which holds a licence) just download the required RF2 ZIP files from the internal [Snomed-release-filer](https://sllse.sharepoint.com/:f:/s/KTeamsKITScrumTeams/IgCcDD7gSG9eRZrB6qmU0RO5Afr1xyJX7rxVpe4SxcFTdxw?e=ABU7RG) Teams file area that is only available to employees. In the VS Code Explorer, drag the downloaded ZIP files into the repository's `import-landing-zone` folder, and check that they have all landed there (it can take some time), then run these three commands in the VS Code terminal:
-
-```bash
-python3 .devcontainer/import-snomed-releases.py
-python3 .devcontainer/load-snomed-release.py
-python3 .devcontainer/build-latest-snomed-database.py
-```
-
-The import script identifies each release from its RF2 contents, moves it into the dated `snomed-ct/` folder, and removes it from `import-landing-zone`. It records the time and destination in `import-landing-zone/landing-zone-log.md`; after a successful import, that log is the only file left in the landing zone. The ZIP archives in `snomed-ct/` are ignored by Git and stay local to the Codespace.
-
-The script selects the newest Swedish folder, reads its International dependency from RF2 metadata, and requires that exact International release before layering the two archives. It stores `swedish-snomed.ndjson` and `swedish-snomed.db` under `$SCT_DATA_HOME/data`, applying the Swedish preferred terms from the Swedish language refset. It also builds SCT's transitive-closure table and indexes to speed up hierarchy queries. Example: The 2026-05-31 Swedish release requires International 2026-02-01; the later released bundled 2026-10-01 International release is not a substitute. To add or repair the closure table in an existing database, run `sct tct --db "$SCT_DATA_HOME/data/swedish-snomed.db"`. To start the server separately after a compatible build, run `cd "$SCT_DATA_HOME/data" && sct serve --db swedish-snomed.db`.
-
-See [DEVCONTAINER-MAINTAINER-README.md](DEVCONTAINER-MAINTAINER-README.md) for release intake and compatibility requirements.
+The container installs SCT, but not SNOMED CT release files or a database. Follow **[SNOMED-CT-SETUP.md](SNOMED-CT-SETUP.md)** for RF2 download, import scripts, and building `swedish-snomed.db`.
 
 ### Running SCT (SNOMED CT) server or external terminology servers
 
-After the first-time SNOMED CT index build completes, start the local terminology server when you need it by typing this in the terminal:
+After the first-time SNOMED CT insstall and index build completes (as described in **[SNOMED-CT-SETUP.md](SNOMED-CT-SETUP.md)**), start the local terminology server when you need it by typing this in the terminal:
 
 ```bash
 cd "$SCT_DATA_HOME/data" && sct serve --db swedish-snomed.db
@@ -74,10 +62,13 @@ cd "$SCT_DATA_HOME/data" && sct serve --db swedish-snomed.db
 
 The forwarded server is then available from the Codespace's **Ports** view. See [SCT terminology tooling](#sct-terminology-tooling) for selecting a release or troubleshooting compatible International and Swedish distributions.
 
-You can also from your own scripts call HL7 Nordic Ontoserver at https://tx-nordics.fhir.org/fhir/r4/, a FHIR R4 terminology server with SNOMED CT and other terminologies installed, if you do not want to run a local terminology server in your codespace. The Ontoserver provides SNOMED CT as well as some other installed terminologies through its FHIR R4 endpoint.
+You can also from your own scripts call e.g. HL7 Nordic Ontoserver at https://tx-nordics.fhir.org/fhir/r4/, a FHIR R4 terminology server with SNOMED CT and other terminologies installed, if you do not want to run a local terminology server in your codespace. That Ontoserver provides SNOMED CT as well as some other installed terminologies through its FHIR R4 endpoint.
+
+TODO: Add info about how to connect to INERA Termtjänst
 
 ## Available programming language runtimes
-- Deno (for JavaScript/TypeScript)
+You and/or your AI can easily in this codespace create and run code in these languages
+- JavaScript/TypeScript via Deno (that also handles NPM packages etc if neeeded) 
 - Python (version 3)
 - Rust
 - Java/JVM
@@ -112,8 +103,7 @@ You are remotely controlling a small Linux computer:
 - The Visual Studio Code workspace opens the repository clone under `/workspaces/<your-repository-name>` by default (for example `/workspaces/informatik-02-codespace` if you chose that name when creating your copy from the template).
 - You can drag and drop files from your own computer (e.g. your Windows laptop) onto a directory in the file tree in Visual Studio Code, and you can right-click a file in Visual Studio Code and select "Download" to let your browser download the file.
 - /shared-not-stored-in-git - A persistent, non-version-controlled volume for staged SNOMED CT files and SCT data
-- /personal-not-stored-in-git - A persistent, non-version-controlled volume for personal files
-- There are many other directories on the computer:
+- There are many other directories on the codespace computer running in the cloud:
 ![alt text](image-2.png)
 
 ## AI models
@@ -140,43 +130,6 @@ When you are finished, stop the Codespace from the GitHub Codespaces menu, or fr
 
 To check usage, open GitHub **Settings > Billing & licensing > Plans and usage** (the exact menu names can vary) and look for the **Codespaces** usage section for processor hours and storage. The same page's **Copilot** section shows remaining or used agent and premium-request allowances when those are provided by your plan. Your organisation may instead show these details under its organisation billing or Copilot usage pages.
 
-## Optional: Updating your repository copy from the template repository later
+## Optional: Updating from the template later
 
-A repository you create with **Use this template** is a separate Git repository. GitHub does _not_ auto-sync it when the template (e.g. `informatik-02-codespace-template`) changes (unlike a fork’s **Sync fork** button). GitHub also does **not** copy the template’s commit history into your repo — only the files at one snapshot — so your `main` and the template’s `main` are unrelated histories until you link them once (see below).
-
-**One-time setup** — in your copy’s clone, add the template as an extra remote (name it `upstream`; keep `origin` as your repo):
-
-```bash
-git remote add upstream https://github.com/regionstockholm/informatik-02-codespace-template.git
-```
-
-**If/when you want updates from the template** — run these in a terminal in your clone (or Codespace):
-
-```bash
-git fetch upstream
-git checkout main
-git merge upstream/main
-git status
-```
-
-**First merge only:** if Git says `fatal: refusing to merge unrelated histories`, that is expected for a repo created from the template. Run the same merge once with:
-
-```bash
-git merge upstream/main --allow-unrelated-histories
-```
-
-Resolve conflicts (very common in `README.md` if you rewrote it; also possible under `.devcontainer/`). Remove `<<<<<<<` / `=======` / `>>>>>>>` markers, `git add` the fixed files, then `git commit` (or `git merge --continue`). After this one-time merge, later updates can use plain `git merge upstream/main` without the extra flag.
-
-**Partial updates (optional):** if you only want maintainer changes in certain paths (e.g. tooling, not the template README), after `git fetch upstream` you can bring over paths explicitly, then review and commit — for example:
-
-```bash
-git checkout upstream/main -- .devcontainer/ .github/
-```
-
-That overwrites those folders in your working tree with the template versions; adjust the paths to what you need.
-
-**After a successful merge:** `git push origin main`. If `.devcontainer/` changed, rebuild the dev container (**Command Palette** → **Codespaces: Rebuild Container**).
-
-Later runs: if `git merge upstream/main` prints **`Already up to date.`**, your branch already contains the template commits you merged previously. Use `git log --oneline main..upstream/main` to see template commits you have not merged yet.
-
-You only need the steps above; there is no requirement to merge on every template change. Cherry-pick individual commits if you only want part of an update.
+Repos created with **Use this template** are not auto-synced with `informatik-02-codespace-template`. See **[UPDATING-FROM-TEMPLATE.md](UPDATING-FROM-TEMPLATE.md)** for `upstream` remote setup, merging (including unrelated histories), and partial updates.
