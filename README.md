@@ -150,14 +150,25 @@ A repository you create with **Use this template** is a separate free-standing G
 git remote add upstream https://github.com/regionstockholm/informatik-02-codespace-template.git
 ```
 
-**If/when you want updates from the template** — fetch and merge (or rebase if you prefer a linear history):
+**If/when you want updates from the template** — in a terminal in your clone (or Codespace) sun these lines one by one:
 
 ```bash
 git fetch upstream
 git checkout main
 git merge upstream/main
+git status
 ```
 
-Resolve any merge conflicts (Will commonly/likely conflict in `README.md` if you rewrote it, or in `.devcontainer/` if both sides changed). Push to your repo: `git push origin main`. If `.devcontainer/` changed, rebuild the dev container in your codespace (e.g. form comannd palette **Codespaces: Rebuild Container**) so tooling matches the template.
+What you should see:
+
+- After `git fetch upstream`: lines like `* [new branch] main -> upstream/main` (first time only) mean the template repositiory content was downloaded; that step succeeded.
+- After `git checkout main`: `Already on 'main'` is normal.
+- After `git merge upstream/main`: either **`Already up to date.`** (your `main` already contains everything on the template — nothing to do), or Git lists files changed / asks you to resolve conflicts. If Git opens an editor for a merge commit message, save and close it to finish the merge.
+- After a successful merge that actually changed something: **`git push origin main`** so GitHub has the update. Skip the push if merge said already up to date.
+Either: 
+  - Solve manually: Merge conflicts are common in `README.md` if you rewrote it, or in `.devcontainer/` if both sides changed. Edit conflicted files, remove the `<<<<<<<` / `=======` / `>>>>>>>` markers, then `git add` those files and run `git commit` (or `git merge --continue` if Git says a merge is in progress).
+  - Or ask your AI to solve it
+
+If `.devcontainer/` changed, rebuild the dev container (**Command Palette** → **Codespaces: Rebuild Container**) so tooling matches the template.
 
 You only need the steps above; there is no requirement to merge on every template change. Skip or cherry-pick commits if you only want part of an update.
