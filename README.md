@@ -128,7 +128,7 @@ If you have some other subscription, for example from Google, OpenAI/ChatGPT, An
 
 You will likely be asked for a secret API key — if you supply that secret you may not want to share your codespace with others who can copy your key, and also do not put that key in a version-controlled file in GitHub.
 
-### Free processor hours
+## Free processor hours
 
 Processor hours measure time while the Codespace is running, not how long the browser-based VS Code window is open. An open browser tab does not continuously use processor resources by itself, but terminals, servers, builds, and other processes running in the Codespace do. Persistent storage is handled separately.
 
@@ -136,7 +136,7 @@ To pause work in a terminal, press `Ctrl+C` to stop the foreground command, or t
 
 When you are finished, stop the Codespace from the GitHub Codespaces menu, or from the Command Palette with **Codespaces: Stop Current Codespace**. A stopped Codespace keeps its files and can be restarted later, but it no longer uses processor hours. Delete it only when you also want to remove the Codespace environment and its stored data.
 
-### Check usage
+### Check usage (how much free stuff left etc.)
 
 To check usage, open GitHub **Settings > Billing & licensing > Plans and usage** (the exact menu names can vary) and look for the **Codespaces** usage section for processor hours and storage. The same page's **Copilot** section shows remaining or used agent and premium-request allowances when those are provided by your plan. Your organisation may instead show these details under its organisation billing or Copilot usage pages.
 
