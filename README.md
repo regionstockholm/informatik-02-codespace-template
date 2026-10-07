@@ -1,11 +1,15 @@
 # informatik-02-codespace
-Basic workspace/codespace setup, variant #01, for informaticians to use for running e.g. terminology server and openEHR-assistant tools
+Basic workspace/codespace setup, variant #02, for medical/clinical informaticians to use for running e.g. terminology server and openEHR-assistant tools
 
 ## Create your own Codespace
 
-This repository that acts as a template repository is maintained by the workspace maintainers, likely from Karolinska's Platform team. If your organisation permits it, create a separate repository from this template (as described below) rather than working directly in the maintained repository. Repository creation and access are controlled by your organisation; ask its administrator if you cannot create a repository or access Codespaces.
+If rhis repository (see url) is called regionstockholm/informatik-02-codespace-template then it acts as a template repository is maintained by the workspace maintainers, from Karolinska's Platform team. 
 
-### Create your own repository (first time)
+To get started create a new separate repository based on this template (as described below) rather than trying to work directly in this regionstockholm/informatik-02-codespace-template repository. 
+
+Then rewrite this README.md file to better reflect the name and purpose of your copy. If you are collaborating with others, then it can be smart to let others work  in (or in turn copy) your copy so that you can merge your work.
+
+### Create your own repository (first time, unless invited to somebody else's)
 
 1. Sign in to GitHub and open this repository (if not already done).
 
@@ -16,26 +20,32 @@ This repository that acts as a template repository is maintained by the workspac
 
 <img width="785" height="718" alt="image" src="https://github.com/user-attachments/assets/635f73f5-491c-4837-8219-af0f1f3137f0" />
 
-5. In the new repository, select **Code > Codespaces > Create codespace on main**.
+### Create a codespace (or open an exisisting one if availeble)
 
-GitHub then builds the development container from `.devcontainer/devcontainer.json`. The first build can take several minutes. When it is ready, VS Code will open in tha web browser - inside it open a "terminal" and check that at least these tools are available by typing each line folowed by enter:
+If you are new to Visual Studio Code (VS Code) you may want to learn about it first, e.g. at https://code.visualstudio.com/learn You need to know at least how to open the "terminal" (it is a menu bar choice and usually appears at the bottom of the screen) A codespace is running on a computer in the cloud and shows up as a running VS Code in your web browser window (or as an application if you choose to "install" it on your desktop from the install button in the URL bar of your beowser).
+
+If you (or somebody else that have invited you to colalborate) have already created a codespace then you will see it in a list like "animated sniffle" in the screenshot below (they get auto-assigned rather creative names...) and you can just reopen it rather than createing a new one. It is also possible for two persons to work in the same codespace (if invited) a bit like writing simultateneously in Google Docs.
+
+![alt text](image-3.png)
+
+#### First time creation and initial tests
+
+In the new repository, first time if no codespace exists, select **Code > Codespaces > Create codespace on main**.
+
+GitHub then builds the development container from the configuration file `.devcontainer/devcontainer.json`. The first build can take several minutes.
+
+When it is ready, VS Code will open in tha web browser - inside it open a "terminal" and check that at least these tools are available after the first install, by typing each line folowed by enter:
 
 ```bash
 sct --help
 python3 --version
 ```
 
-SNOMED CT RF2 ZIP archives are distributed separately and are not stored in Git. Import the releases you are authorized to use as described in "First-time SNOMED CT setup" below. The imported archives and generated databases remain local to your Codespace.
-
-### Open a Codespace directly
-
-If you have been granted access to an existing organisation repository (a renamed copy of the template repository), you do not need to create another copy. Open that repository on GitHub, select **Code > Codespaces > Create codespace on main**, and wait for the devcontainer to finish building. Use a separate Codespace for your own work so that personal files, generated databases, and running services do not interfere with anyone else's environment unless asked to cooperate in same codespace.
-
-![alt text](image-3.png)
+A version number should be returned. The `sct` command checks if the SNOMED CT tool SCT, made by Marcus Baw is installed and working. The second command checks that the programming language Python is installed (it is used for some loading scripts and is one of the languages you (and your AI) can use here.
 
 ### First-time SNOMED CT setup
 
-The container installs the SCT command, but it does not automatically download SNOMED CT releases or build a database. If you are a logged in employee of Region Stockholm Download the required RF2 ZIP files from the internal [Snomed-release-filer](https://sllse.sharepoint.com/:f:/s/KTeamsKITScrumTeams/IgCcDD7gSG9eRZrB6qmU0RO5Afr1xyJX7rxVpe4SxcFTdxw?e=ABU7RG) Teams file area. In the VS Code Explorer, drag the downloaded ZIP files into the repository's `import-landing-zone` folder, then run:
+The codespace container installs the SCT command automatically, but it does not automatically download SNOMED CT releases or build a database, you have to get hold of suitable SNOMED CT distrinution zip files that are licenced to your organisation from your national release center. Examlpe: If you are a logged in employee of Region Stockholm (that holds a licence) just download the required RF2 ZIP files from the internal [Snomed-release-filer](https://sllse.sharepoint.com/:f:/s/KTeamsKITScrumTeams/IgCcDD7gSG9eRZrB6qmU0RO5Afr1xyJX7rxVpe4SxcFTdxw?e=ABU7RG) Teams file area that is only available to employees. In the VS Code Explorer, drag the downloaded ZIP files into the repository's `import-landing-zone` folder, and check that they have all landed there (it can take some time), then run these three commands in the VS Code terminal:
 
 ```bash
 python3 .devcontainer/import-snomed-releases.py
@@ -45,15 +55,17 @@ python3 .devcontainer/build-latest-snomed-database.py
 
 The import script identifies each release from its RF2 contents, moves it into the dated `snomed-ct/` folder, and removes it from `import-landing-zone`. It records the time and destination in `import-landing-zone/landing-zone-log.md`; after a successful import, that log is the only file left in the landing zone. The ZIP archives in `snomed-ct/` are ignored by Git and stay local to the Codespace.
 
-After the build completes, start the local terminology server when needed:
+### Running SCT (SNOMED CT) server or external terminology servers
+
+After the first time SNOMED CT indec build completes, start the local terminology server when you need it by typing this in the terminal:
 
 ```bash
 cd "$SCT_DATA_HOME/data" && sct serve --db swedish-snomed.db
 ```
 
-The forwarded server is available from the Codespace's **Ports** view. See [SCT terminology tooling](#sct-terminology-tooling) for selecting a release or troubleshooting compatible International and Swedish distributions.
+The forwarded server is then available from the Codespace's **Ports** view. See [SCT terminology tooling](#sct-terminology-tooling) for selecting a release or troubleshooting compatible International and Swedish distributions.
 
- You can also from you own scripts call HL7 Nordic Ontoserver at https://tx-nordics.fhir.org/fhir/r4/, a FHIR R4 terminology server with SNOMED CT and other terminologies installed if you do not want to run a local copy 
+You can also from you own scripts call HL7 Nordic Ontoserver at https://tx-nordics.fhir.org/fhir/r4/, a FHIR R4 terminology server with SNOMED CT and other terminologies installed if you do not want to run a local terminology server in your codespace. The Ontoserver provides SNOMED CT as well as some other installed terminologies through its FHIR R4 endpoint.
 
 ## Available programming language runtimes
 - Deno (for Javascript/Typescript)
@@ -63,18 +75,14 @@ The forwarded server is available from the Codespace's **Ports** view. See [SCT 
 
 ## Installed servers, MCPs etc.
 - openehr-assistant from https://cadasto.github.io/openehr-assistant/
-- local SCT SNOMED CT tools backed by the built Swedish database
+- local SCT SNOMED CT tools thet includes MCP server for your AI agents
 
-### SNOMED CT AI skills
-
-This repository includes two reusable AI skills for the local `sct` MCP tools:
+This repository includes two homegrown experimental (fairly untested) rudimentary reusable AI skills for the local `sct` MCP tools:
 
 - [SNOMED CT term mapping](.github/skills/snomed-term-mapping/SKILL.md) maps proprietary term lists to existing concepts and flags uncertain results or `NO_MAP` items for review.
 - [SNOMED CT concept modelling](.github/skills/snomed-concept-modelling/SKILL.md) turns unresolved items into a validated post-coordinated expression and a separate draft proposal for the responsible authoring or National Release Center process.
 
 These skills support terminology work; they do not approve mappings, mint new SCTIDs, or replace clinical and terminology-authoring review.
-
-For terminology lookups, agents and users can use either the local SCT tools or the [HL7 Nordic Ontoserver](https://tx-nordics.fhir.org/fhir/r4/). The Ontoserver provides SNOMED CT as well as some other installed terminologies through its FHIR R4 endpoint. When using it, identify the terminology and version or edition where relevant, and clearly distinguish results from the local Swedish SCT database.
 
 ### Using the openEHR assistant
 For an openEHR task like translating, you can explicitly ask the assistant to use the MCP and its openEHR guidance:
