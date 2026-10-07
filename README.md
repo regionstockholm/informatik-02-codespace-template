@@ -3,7 +3,7 @@ Basic workspace/codespace setup, variant #02, for medical/clinical informatician
 
 ## Create your own Codespace
 
-If rhis repository (see url) is called regionstockholm/informatik-02-codespace-template then it acts as a template repository is maintained by the workspace maintainers, from Karolinska's Platform team. 
+If this repository (see e.g. url in your browser) is called ...regionstockholm/informatik-02-codespace-template then it acts as a template repository is maintained by the workspace maintainers, from Karolinska's Platform team. 
 
 To get started create a new separate repository based on this template (as described below) rather than trying to work directly in this regionstockholm/informatik-02-codespace-template repository. 
 
@@ -22,6 +22,8 @@ Then rewrite this README.md file to better reflect the name and purpose of your 
 
 ### Create a codespace (or open an exisisting one if availeble)
 
+The general documentation about Codespaces is found at https://docs.github.com/en/codespaces
+
 If you are new to Visual Studio Code (VS Code) you may want to learn about it first, e.g. at https://code.visualstudio.com/learn You need to know at least how to open the "terminal" (it is a menu bar choice and usually appears at the bottom of the screen) A codespace is running on a computer in the cloud and shows up as a running VS Code in your web browser window (or as an application if you choose to "install" it on your desktop from the install button in the URL bar of your beowser).
 
 If you (or somebody else that have invited you to colalborate) have already created a codespace then you will see it in a list like "animated sniffle" in the screenshot below (they get auto-assigned rather creative names...) and you can just reopen it rather than createing a new one. It is also possible for two persons to work in the same codespace (if invited) a bit like writing simultateneously in Google Docs.
@@ -31,6 +33,8 @@ If you (or somebody else that have invited you to colalborate) have already crea
 #### First time creation and initial tests
 
 In the new repository, first time if no codespace exists, select **Code > Codespaces > Create codespace on main**.
+
+(insert image here)
 
 GitHub then builds the development container from the configuration file `.devcontainer/devcontainer.json`. The first build can take several minutes.
 
@@ -54,6 +58,10 @@ python3 .devcontainer/build-latest-snomed-database.py
 ```
 
 The import script identifies each release from its RF2 contents, moves it into the dated `snomed-ct/` folder, and removes it from `import-landing-zone`. It records the time and destination in `import-landing-zone/landing-zone-log.md`; after a successful import, that log is the only file left in the landing zone. The ZIP archives in `snomed-ct/` are ignored by Git and stay local to the Codespace.
+
+The script selects the newest Swedish folder, reads its International dependency from RF2 metadata, and requires that exact International release before layering the two archives. It stores `swedish-snomed.ndjson` and `swedish-snomed.db` under `$SCT_DATA_HOME/data`, applying the Swedish preferred terms from the Swedish language refset. It also builds SCT's transitive-closure table and indexes to speed up hierarchy queries. Example: The 2026-05-31 Swedish release requires International 2026-02-01; the later released bundled 2026-10-01 International release is not a substitute. To add or repair the closure table in an existing database, run `sct tct --db "$SCT_DATA_HOME/data/swedish-snomed.db"`. To start the server separately after a compatible build, run `cd "$SCT_DATA_HOME/data" && sct serve --db swedish-snomed.db`.
+
+See [DEVCONTAINER-MAINTAINER-README.md](DEVCONTAINER-MAINTAINER-README.md) for release intake and compatibility requirements.
 
 ### Running SCT (SNOMED CT) server or external terminology servers
 
@@ -96,35 +104,7 @@ The codespace image installs [SCT](https://github.com/pacharanero/sct) v0.27.0 a
 
 In addition to the local SCT database, terminology services can be queried from the [HL7 Nordic Ontoserver](https://tx-nordics.fhir.org/fhir/r4/). It exposes SNOMED CT and some other terminologies through FHIR R4 and can be useful when the required terminology is not available in the local database.
 
-International and Swedish SNOMED CT RF2 releases are imported into `snomed-ct/international/<YYYY-MM-DD>/` and `snomed-ct/sv/<YYYY-MM-DD>/`. Their original ZIP filenames are preserved, and the ZIPs are ignored by Git. Download only releases you are authorized to access from the internal [Snomed-release-filer](https://sllse.sharepoint.com/:f:/s/KTeamsKITScrumTeams/IgCcDD7gSG9eRZrB6qmU0RO5Afr1xyJX7rxVpe4SxcFTdxw?e=ABU7RG) Teams file area, then drag them into `import-landing-zone/` in the VS Code Explorer.
-
-Run the importer to classify and move all ZIP files currently in the landing zone:
-
-```bash
-python3 .devcontainer/import-snomed-releases.py
-```
-
-The importer derives the edition and date from RF2 snapshot filenames, rejects unrecognized or ambiguous archives, and refuses to overwrite a ZIP already present for that edition and date. It moves accepted files into the dated folders and appends a timestamp and destination to `import-landing-zone/landing-zone-log.md`. It does not extract the archives. Release notes PDFs remain ordinary repository files; only RF2 ZIPs belong in the landing zone.
-
-List Swedish releases now present in this Codespace, stage the newest one, or choose a specific tag:
-
-```bash
-python3 .devcontainer/load-snomed-release.py --list
-python3 .devcontainer/load-snomed-release.py
-python3 .devcontainer/load-snomed-release.py snomed-ct-sv-2026-05-31
-```
-
-The loader stages the selected Swedish archive under `SNOMED_CT_DISTRIBUTION_DIRECTORY` (`/shared-not-stored-in-git/snomed-ct-files`). SCT databases and derived files go under `SCT_DATA_HOME` (`/shared-not-stored-in-git/sct-data`). Each Codespace has its own persistent volume; these paths are not shared mounts across colleagues' Codespaces. Import both the Swedish release and the exact International release it requires before building.
-
-To build the latest compatible Swedish release into its local SCT database, run:
-
-```bash
-python3 .devcontainer/build-latest-snomed-database.py
-```
-
-The script selects the newest Swedish folder, reads its International dependency from RF2 metadata, and requires that exact International release before layering the two archives. It stores `swedish-snomed.ndjson` and `swedish-snomed.db` under `$SCT_DATA_HOME/data`, applying the Swedish preferred terms from the Swedish language refset. It also builds SCT's transitive-closure table and indexes to speed up hierarchy queries. Example: The 2026-05-31 Swedish release requires International 2026-02-01; the later released bundled 2026-10-01 International release is not a substitute. To add or repair the closure table in an existing database, run `sct tct --db "$SCT_DATA_HOME/data/swedish-snomed.db"`. To start the server separately after a compatible build, run `cd "$SCT_DATA_HOME/data" && sct serve --db swedish-snomed.db`.
-
-See [DEVCONTAINER-MAINTAINER-README.md](DEVCONTAINER-MAINTAINER-README.md) for release intake and compatibility requirements.
+International and Swedish SNOMED CT RF2 releases are imported into `snomed-ct/international/<YYYY-MM-DD>/` and `snomed-ct/sv/<YYYY-MM-DD>/`. Their original ZIP filenames are preserved, and the ZIPs are ignored by Git. Use only releases you are authorized to access.
 
 ## Working with files and special directories 
 You are remote controlling a small Linux computer
