@@ -1,15 +1,25 @@
 # informatik-02-codespace
-Basic workspace/codespace setup, variant #02, for medical/clinical informaticians to use for running e.g. terminology server and openEHR-assistant tools
+Welcome to a basic workspace/codespace setup, variant #02, for medical/clinical informaticians to use for running e.g. terminology server and openEHR-assistant tools
 
-## Create your own Codespace
+General documentation about Codespaces is found at https://docs.github.com/en/codespaces
+
+If you are new to Visual Studio Code (VS Code) you may want to learn about it first, e.g. at https://code.visualstudio.com/learn You need to know at least how to open the "terminal" (it is a menu bar choice and usually appears at the bottom of the screen) A codespace is running on a computer in the cloud and shows up as a running VS Code in your web browser window (or as an application if you choose to "install" it on your desktop from the install button in the URL bar of your beowser).
+
+## Open an exisisting Codespace (e.g. if invited to one)
+
+If you (or somebody else that have invited you to colalborate) have already created a codespace then you will see it in a list like "animated sniffle" in the screenshot below (they get auto-assigned rather creative names...) and you can just reopen it rather than createing a new one. It is also possible for two persons to work in the same codespace (if invited) a bit like writing simultateneously in Google Docs.
+
+![alt text](image-3.png)
+
+## Create and set up tools in your own new Codespace
 
 If this repository (see e.g. url in your browser) is called ...regionstockholm/informatik-02-codespace-template then it acts as a template repository is maintained by the workspace maintainers, from Karolinska's Platform team. 
 
 To get started create a new separate repository based on this template (as described below) rather than trying to work directly in this regionstockholm/informatik-02-codespace-template repository. 
 
-Then rewrite this README.md file to better reflect the name and purpose of your copy. If you are collaborating with others, then it can be smart to let others work  in (or in turn copy) your copy so that you can merge your work.
+Then rewrite this README.md file to better reflect the name and purpose of your copy. If you are collaborating with others, then it can be smart to let others work in (or in turn copy) your copy so that you can share/merge your collaborativemwork.
 
-### Create your own repository (first time, unless invited to somebody else's)
+### Create a repository copy in your own repository (first time, unless invited to somebody else's)
 
 1. Sign in to GitHub and open this repository (if not already done).
 
@@ -20,21 +30,12 @@ Then rewrite this README.md file to better reflect the name and purpose of your 
 
 <img width="785" height="718" alt="image" src="https://github.com/user-attachments/assets/635f73f5-491c-4837-8219-af0f1f3137f0" />
 
-### Create a codespace (or open an exisisting one if availeble)
 
-The general documentation about Codespaces is found at https://docs.github.com/en/codespaces
+### First time codespace creation and initial tests
 
-If you are new to Visual Studio Code (VS Code) you may want to learn about it first, e.g. at https://code.visualstudio.com/learn You need to know at least how to open the "terminal" (it is a menu bar choice and usually appears at the bottom of the screen) A codespace is running on a computer in the cloud and shows up as a running VS Code in your web browser window (or as an application if you choose to "install" it on your desktop from the install button in the URL bar of your beowser).
+In the new repository, first time if no codespace exists, select **Code > Codespaces > Create codespace on main**. (If a codespace already exists and you can access it, then you do not need to create a new one)
 
-If you (or somebody else that have invited you to colalborate) have already created a codespace then you will see it in a list like "animated sniffle" in the screenshot below (they get auto-assigned rather creative names...) and you can just reopen it rather than createing a new one. It is also possible for two persons to work in the same codespace (if invited) a bit like writing simultateneously in Google Docs.
-
-![alt text](image-3.png)
-
-#### First time creation and initial tests
-
-In the new repository, first time if no codespace exists, select **Code > Codespaces > Create codespace on main**.
-
-(insert image here)
+<img width="776" height="764" alt="Skärmbild 2026-10-07 071337" src="https://github.com/user-attachments/assets/37bbd887-eb50-489e-9455-10591da7b49b" />
 
 GitHub then builds the development container from the configuration file `.devcontainer/devcontainer.json`. The first build can take several minutes.
 
