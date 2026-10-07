@@ -3,11 +3,11 @@ Basic workspace/codespace setup, variant #02, for medical/clinical informatician
 
 ## Create your own Codespace
 
-If this repository (see e.g. url in your browser) is called ...regionstockholm/informatik-02-codespace-template then it acts as a template repository is maintained by the workspace maintainers, from Karolinska's Platform team. 
+If this repository (see e.g. the URL in your browser) is called ...regionstockholm/informatik-02-codespace-template then it acts as a template repository that is maintained by the workspace maintainers, from Karolinska's Platform team. 
 
-To get started create a new separate repository based on this template (as described below) rather than trying to work directly in this regionstockholm/informatik-02-codespace-template repository. 
+To get started, create a new separate repository based on this template (as described below) rather than trying to work directly in this regionstockholm/informatik-02-codespace-template repository. 
 
-Then rewrite this README.md file to better reflect the name and purpose of your copy. If you are collaborating with others, then it can be smart to let others work  in (or in turn copy) your copy so that you can merge your work.
+Then rewrite this README.md file to better reflect the name and purpose of your copy. If you are collaborating with others, then it can be smart to let others work in (or in turn copy) your copy so that you can merge your work.
 
 ### Create your own repository (first time, unless invited to somebody else's)
 
@@ -16,17 +16,17 @@ Then rewrite this README.md file to better reflect the name and purpose of your 
 2. Select **Use this template** and then **Create a new repository**.
 <img width="1172" height="277" alt="image" src="https://github.com/user-attachments/assets/09acb820-e586-4a77-9540-42c3b00864ab" />
    
-4. Choose an owner (either your private github account for experiemnts - or your employee's, e.g. regionstockholm for shared work) and a choose a repository name. 
+3. Choose an owner (either your private GitHub account for experiments — or your employer's, e.g. regionstockholm for shared work) and choose a repository name. 
 
 <img width="785" height="718" alt="image" src="https://github.com/user-attachments/assets/635f73f5-491c-4837-8219-af0f1f3137f0" />
 
-### Create a codespace (or open an exisisting one if availeble)
+### Create a codespace (or open an existing one if available)
 
 The general documentation about Codespaces is found at https://docs.github.com/en/codespaces
 
-If you are new to Visual Studio Code (VS Code) you may want to learn about it first, e.g. at https://code.visualstudio.com/learn You need to know at least how to open the "terminal" (it is a menu bar choice and usually appears at the bottom of the screen) A codespace is running on a computer in the cloud and shows up as a running VS Code in your web browser window (or as an application if you choose to "install" it on your desktop from the install button in the URL bar of your beowser).
+If you are new to Visual Studio Code (VS Code) you may want to learn about it first, e.g. at https://code.visualstudio.com/learn You need to know at least how to open the "terminal" (it is a menu bar choice and usually appears at the bottom of the screen). A codespace is running on a computer in the cloud and shows up as a running VS Code in your web browser window (or as an application if you choose to "install" it on your desktop from the install button in the URL bar of your browser).
 
-If you (or somebody else that have invited you to colalborate) have already created a codespace then you will see it in a list like "animated sniffle" in the screenshot below (they get auto-assigned rather creative names...) and you can just reopen it rather than createing a new one. It is also possible for two persons to work in the same codespace (if invited) a bit like writing simultateneously in Google Docs.
+If you (or somebody else who has invited you to collaborate) have already created a codespace then you will see it in a list like "animated sniffle" in the screenshot below (they get auto-assigned rather creative names...) and you can just reopen it rather than creating a new one. It is also possible for two persons to work in the same codespace (if invited) a bit like writing simultaneously in Google Docs.
 
 ![alt text](image-3.png)
 
@@ -38,18 +38,18 @@ In the new repository, first time if no codespace exists, select **Code > Codesp
 
 GitHub then builds the development container from the configuration file `.devcontainer/devcontainer.json`. The first build can take several minutes.
 
-When it is ready, VS Code will open in tha web browser - inside it open a "terminal" and check that at least these tools are available after the first install, by typing each line folowed by enter:
+When it is ready, VS Code will open in the web browser — inside it open a "terminal" and check that at least these tools are available after the first install, by typing each line followed by Enter:
 
 ```bash
 sct --help
 python3 --version
 ```
 
-A version number should be returned. The `sct` command checks if the SNOMED CT tool SCT, made by Marcus Baw is installed and working. The second command checks that the programming language Python is installed (it is used for some loading scripts and is one of the languages you (and your AI) can use here.
+A version number should be returned. The `sct` command checks if the SNOMED CT tool SCT, made by Marcus Baw, is installed and working. The second command checks that the programming language Python is installed (it is used for some loading scripts and is one of the languages you (and your AI) can use here).
 
 ### First-time SNOMED CT setup
 
-The codespace container installs the SCT command automatically, but it does not automatically download SNOMED CT releases or build a database, you have to get hold of suitable SNOMED CT distrinution zip files that are licenced to your organisation from your national release center. Examlpe: If you are a logged in employee of Region Stockholm (that holds a licence) just download the required RF2 ZIP files from the internal [Snomed-release-filer](https://sllse.sharepoint.com/:f:/s/KTeamsKITScrumTeams/IgCcDD7gSG9eRZrB6qmU0RO5Afr1xyJX7rxVpe4SxcFTdxw?e=ABU7RG) Teams file area that is only available to employees. In the VS Code Explorer, drag the downloaded ZIP files into the repository's `import-landing-zone` folder, and check that they have all landed there (it can take some time), then run these three commands in the VS Code terminal:
+The codespace container installs the SCT command automatically, but it does not automatically download SNOMED CT releases or build a database. You have to get hold of suitable SNOMED CT distribution ZIP files that are licensed to your organisation from your national release centre. Example: If you are a logged-in employee of Region Stockholm (which holds a licence) just download the required RF2 ZIP files from the internal [Snomed-release-filer](https://sllse.sharepoint.com/:f:/s/KTeamsKITScrumTeams/IgCcDD7gSG9eRZrB6qmU0RO5Afr1xyJX7rxVpe4SxcFTdxw?e=ABU7RG) Teams file area that is only available to employees. In the VS Code Explorer, drag the downloaded ZIP files into the repository's `import-landing-zone` folder, and check that they have all landed there (it can take some time), then run these three commands in the VS Code terminal:
 
 ```bash
 python3 .devcontainer/import-snomed-releases.py
@@ -65,7 +65,7 @@ See [DEVCONTAINER-MAINTAINER-README.md](DEVCONTAINER-MAINTAINER-README.md) for r
 
 ### Running SCT (SNOMED CT) server or external terminology servers
 
-After the first time SNOMED CT indec build completes, start the local terminology server when you need it by typing this in the terminal:
+After the first-time SNOMED CT index build completes, start the local terminology server when you need it by typing this in the terminal:
 
 ```bash
 cd "$SCT_DATA_HOME/data" && sct serve --db swedish-snomed.db
@@ -73,17 +73,17 @@ cd "$SCT_DATA_HOME/data" && sct serve --db swedish-snomed.db
 
 The forwarded server is then available from the Codespace's **Ports** view. See [SCT terminology tooling](#sct-terminology-tooling) for selecting a release or troubleshooting compatible International and Swedish distributions.
 
-You can also from you own scripts call HL7 Nordic Ontoserver at https://tx-nordics.fhir.org/fhir/r4/, a FHIR R4 terminology server with SNOMED CT and other terminologies installed if you do not want to run a local terminology server in your codespace. The Ontoserver provides SNOMED CT as well as some other installed terminologies through its FHIR R4 endpoint.
+You can also from your own scripts call HL7 Nordic Ontoserver at https://tx-nordics.fhir.org/fhir/r4/, a FHIR R4 terminology server with SNOMED CT and other terminologies installed, if you do not want to run a local terminology server in your codespace. The Ontoserver provides SNOMED CT as well as some other installed terminologies through its FHIR R4 endpoint.
 
 ## Available programming language runtimes
-- Deno (for Javascript/Typescript)
+- Deno (for JavaScript/TypeScript)
 - Python (version 3)
 - Rust
 - Java/JVM
 
 ## Installed servers, MCPs etc.
 - openehr-assistant from https://cadasto.github.io/openehr-assistant/
-- local SCT SNOMED CT tools thet includes MCP server for your AI agents
+- local SCT SNOMED CT tools that include an MCP server for your AI agents
 
 This repository includes two homegrown experimental (fairly untested) rudimentary reusable AI skills for the local `sct` MCP tools:
 
@@ -107,9 +107,9 @@ In addition to the local SCT database, terminology services can be queried from 
 International and Swedish SNOMED CT RF2 releases are imported into `snomed-ct/international/<YYYY-MM-DD>/` and `snomed-ct/sv/<YYYY-MM-DD>/`. Their original ZIP filenames are preserved, and the ZIPs are ignored by Git. Use only releases you are authorized to access.
 
 ## Working with files and special directories 
-You are remote controlling a small Linux computer
-- The Visual Studio Code workspace that you see opens the directory /workspaces/informatik-01-codespace by default
-- You can drag and drop files from you own computer (e.g. your windows laptop) onto the a directory in the file tree in Visual Studio Code and you can right-click a file in Visual Studio Code and select "Download" to let your browser download the file.
+You are remotely controlling a small Linux computer:
+- The Visual Studio Code workspace opens the repository clone under `/workspaces/<your-repository-name>` by default (for example `/workspaces/informatik-02-codespace` if you chose that name when creating your copy from the template).
+- You can drag and drop files from your own computer (e.g. your Windows laptop) onto a directory in the file tree in Visual Studio Code, and you can right-click a file in Visual Studio Code and select "Download" to let your browser download the file.
 - /shared-not-stored-in-git - A persistent, non-version-controlled volume for staged SNOMED CT files and SCT data
 - /personal-not-stored-in-git - A persistent, non-version-controlled volume for personal files
 - There are many other directories on the computer:
@@ -117,15 +117,15 @@ You are remote controlling a small Linux computer
 
 ## AI models
 
-The Karolinska Platform team is investigating how to set up more user friendly and capable specialized enfironments in KIM (Karolinska's internal cloud), but for now we hope this free setup will help in some tasks regarding SNOMED CT, openEHR etc
+The Karolinska Platform team is investigating how to set up more user-friendly and capable specialized environments in KIM (Karolinska's internal cloud), but for now we hope this free setup will help with some tasks regarding SNOMED CT, openEHR, etc.
 
-Unless you have a Github subscription you will likely be provided with just a free (not so smart) AI agent, set it to "intelligence" before doing advanced work:
+Unless you have a GitHub subscription you will likely be provided with just a free (not so smart) AI agent; set it to "intelligence" before doing advanced work:
 ![alt text](image-1.png)
 
-If you have some other subscription for example from Google, openAI/ChatGPT, ANthropic, [OpenCode](https://opencode.ai/) you can configure it under "manage models":
+If you have some other subscription, for example from Google, OpenAI/ChatGPT, Anthropic, or [OpenCode](https://opencode.ai/), you can configure it under "manage models":
 ![alt text](image.png)
 
-You will likely be asked for a secret api key - if you supply that secret you may not want to share your codespace with others who can copy your key and also don't put that key in a version controlled file in github...
+You will likely be asked for a secret API key — if you supply that secret you may not want to share your codespace with others who can copy your key, and also do not put that key in a version-controlled file in GitHub.
 
 ### Free processor hours
 
@@ -135,6 +135,6 @@ To pause work in a terminal, press `Ctrl+C` to stop the foreground command, or t
 
 When you are finished, stop the Codespace from the GitHub Codespaces menu, or from the Command Palette with **Codespaces: Stop Current Codespace**. A stopped Codespace keeps its files and can be restarted later, but it no longer uses processor hours. Delete it only when you also want to remove the Codespace environment and its stored data.
 
-### Check usage 
+### Check usage
 
 To check usage, open GitHub **Settings > Billing & licensing > Plans and usage** (the exact menu names can vary) and look for the **Codespaces** usage section for processor hours and storage. The same page's **Copilot** section shows remaining or used agent and premium-request allowances when those are provided by your plan. Your organisation may instead show these details under its organisation billing or Copilot usage pages.
