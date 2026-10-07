@@ -139,3 +139,25 @@ When you are finished, stop the Codespace from the GitHub Codespaces menu, or fr
 ### Check usage
 
 To check usage, open GitHub **Settings > Billing & licensing > Plans and usage** (the exact menu names can vary) and look for the **Codespaces** usage section for processor hours and storage. The same page's **Copilot** section shows remaining or used agent and premium-request allowances when those are provided by your plan. Your organisation may instead show these details under its organisation billing or Copilot usage pages.
+
+## Optional: Updating your repository copy from the template repository later
+
+A repository you create with **Use this template** is a separate free-standing Git repository. GitHub does _not_ auto-sync it when the template (e.g. `informatik-02-codespace-template`) changes (unlike a fork’s **Sync fork** button). You can still pull in updates if/when you want them.
+
+**One-time setup if you want possibility to fetch updates** — in your copy’s clone, add the template as an extra remote (name it `upstream`; keep `origin` as your repo):
+
+```bash
+git remote add upstream https://github.com/regionstockholm/informatik-02-codespace-template.git
+```
+
+**If/when you want updates from the template** — fetch and merge (or rebase if you prefer a linear history):
+
+```bash
+git fetch upstream
+git checkout main
+git merge upstream/main
+```
+
+Resolve any merge conflicts (Will commonly/likely conflict in `README.md` if you rewrote it, or in `.devcontainer/` if both sides changed). Push to your repo: `git push origin main`. If `.devcontainer/` changed, rebuild the dev container in your codespace (e.g. form comannd palette **Codespaces: Rebuild Container**) so tooling matches the template.
+
+You only need the steps above; there is no requirement to merge on every template change. Skip or cherry-pick commits if you only want part of an update.
